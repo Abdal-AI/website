@@ -330,6 +330,13 @@
              <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i> Place Order on Fiverr
            </a>
         </div>
+        <div class="payment-banner glass-card">
+          <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+          <h3>Direct Payment Method</h3>
+          <p>JazzCash is available for direct payments if we agree on the project outside marketplaces.</p>
+          <div class="payment-number">JazzCash: 03419007352</div>
+          <div class="payment-number">UBL: 315533424</div>
+        </div>
       </section>
 
       <section id="upwork" class="page-section hire-section" style="display: none;">
@@ -346,6 +353,13 @@
            <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" class="btn-primary" target="_blank" style="background: #14a800; box-shadow: 0 0 20px rgba(20, 168, 0, 0.35); margin-top: 2rem;">
              <i class="fas fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Hire on Upwork
            </a>
+        </div>
+        <div class="payment-banner glass-card upwork-payment">
+          <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+          <h3>Direct Payment Method</h3>
+          <p>For approved direct arrangements, JazzCash is available as a payment option.</p>
+          <div class="payment-number">JazzCash: 03419007352</div>
+          <div class="payment-number">UBL: 315533424</div>
         </div>
       </section>
 
@@ -381,6 +395,42 @@
               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadabdal15140@gmail.com" target="_blank" class="btn-primary">
                 <i class="fas fa-envelope" style="margin-right: 8px;"></i> Email via Gmail
               </a>
+            </div>
+            <div class="payment-inline">
+              <p>Payment Method</p>
+              <strong>JazzCash: 03419007352</strong>
+              <strong>UBL: 315533424</strong>
+            </div>
+
+            <div class="payment-proof">
+              <h4>Send Payment Screenshot</h4>
+              <p class="payment-proof-copy">After payment, upload your screenshot here and use one of the buttons below to send the payment proof.</p>
+              <div class="form-group">
+                <input type="text" id="payment-name" placeholder="Your name">
+              </div>
+              <div class="form-group">
+                <select id="payment-method">
+                  <option value="JazzCash">JazzCash</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Fiverr">Fiverr</option>
+                  <option value="Upwork">Upwork</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" id="payment-reference" placeholder="Transaction ID / reference number">
+              </div>
+              <div class="form-group">
+                <input type="file" id="payment-screenshot" accept="image/*">
+              </div>
+              <div id="payment-preview" class="payment-preview" hidden>
+                <img id="payment-preview-image" alt="Payment screenshot preview">
+                <p id="payment-preview-name"></p>
+              </div>
+              <div class="payment-actions">
+                <button type="button" id="send-proof-whatsapp" class="btn-primary">Send on WhatsApp</button>
+                <button type="button" id="send-proof-email" class="btn-secondary">Send by Email</button>
+              </div>
+              <p class="payment-proof-note">The screenshot preview is for confirmation here. Your browser cannot attach the image automatically, so after clicking WhatsApp or Email, please attach the same screenshot manually.</p>
             </div>
           </div>
         </div>

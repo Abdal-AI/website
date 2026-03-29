@@ -823,6 +823,116 @@ canvas {
   font-family: var(--font-mono);
   font-size: 0.9rem;
 }
+.payment-banner {
+  max-width: 800px;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+}
+.payment-icon {
+  font-size: 2rem;
+  color: #f59e0b;
+  margin-bottom: 0.8rem;
+}
+.payment-number {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #ffd27a;
+}
+.upwork-payment .payment-icon {
+  color: #14a800;
+}
+.upwork-payment .payment-number {
+  background: rgba(20, 168, 0, 0.12);
+  border-color: rgba(20, 168, 0, 0.35);
+  color: #8be27f;
+}
+.payment-inline {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.payment-inline p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.payment-inline strong {
+  font-family: var(--font-mono);
+  color: #ffd27a;
+}
+.payment-proof {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--glass-border);
+}
+.payment-proof h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+.payment-proof-copy,
+.payment-proof-note {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.payment-proof-copy {
+  margin-bottom: 1rem;
+}
+.payment-proof input[type="file"],
+.payment-proof select {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+}
+.payment-preview {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.03);
+}
+.payment-preview img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+.payment-preview p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  word-break: break-word;
+}
+.payment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.payment-actions .btn-primary,
+.payment-actions .btn-secondary {
+  flex: 1 1 220px;
+  text-align: center;
+}
+.payment-proof-note {
+  margin-top: 1rem;
+}
 .contact-email p {
   color: var(--text-secondary);
   font-size: 0.85rem;
@@ -1030,6 +1140,12 @@ canvas {
   }
   .fiverr-banner {
     padding: 2rem 1.25rem;
+  }
+  .payment-banner {
+    padding: 1.5rem 1.25rem;
+  }
+  .payment-actions {
+    flex-direction: column;
   }
   .social-links {
     margin-bottom: 1.5rem;
@@ -1693,5 +1809,12 @@ canvas {
   .review-form select,
   .review-form .btn-primary {
     width: 100%;
+  }
+  .payment-number {
+    width: 100%;
+    border-radius: 18px;
+  }
+  .payment-proof {
+    text-align: left;
   }
 }

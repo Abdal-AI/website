@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await initReviews();
   initChatbot();
+  initPaymentProof();
 });
 
 async function initReviews() {
@@ -301,6 +302,16 @@ function getChatbotReply(message) {
     `;
   }
 
+  if (hasAny(normalized, ['payment', 'pay', 'jazzcash', 'jazz cash', 'bank', 'method'])) {
+    return `
+      Available payment methods depend on the project channel.<br><br>
+      • WordPress work: Fiverr<br>
+      • AI work: Upwork<br>
+      • Direct payment options: <strong>JazzCash 03419007352</strong><br>
+      • Bank option: <strong>UBL 315533424</strong>
+    `;
+  }
+
   if (hasAny(normalized, ['review', 'rating', 'feedback', 'testimonial'])) {
     return 'Visitors can submit a review in the Reviews section on the home page. Reviews are stored in the browser on that device in the current version.';
   }
@@ -328,4 +339,56 @@ function escapeHtml(value) {
 
 function hasAny(text, patterns) {
   return patterns.some((pattern) => text.includes(pattern));
+}
+
+function initPaymentProof() {
+  const fileInput = document.querySelector('#payment-screenshot');
+  const preview = document.querySelector('#payment-preview');
+  const previewImage = document.querySelector('#payment-preview-image');
+  const previewName = document.querySelector('#payment-preview-name');
+  const whatsappBtn = document.querySelector('#send-proof-whatsapp');
+  const emailBtn = document.querySelector('#send-proof-email');
+
+  if (!fileInput || !preview || !previewImage || !previewName || !whatsappBtn || !emailBtn) return;
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files?.[0];
+    if (!file) {
+      preview.hidden = true;
+      previewImage.removeAttribute('src');
+      previewName.textContent = '';
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    previewImage.src = objectUrl;
+    previewName.textContent = `Selected screenshot: ${file.name}`;
+    preview.hidden = false;
+  });
+
+  whatsappBtn.addEventListener('click', () => {
+    const message = buildPaymentProofMessage();
+    window.open(`https://wa.me/923419007352?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+  });
+
+  emailBtn.addEventListener('click', () => {
+    const subject = encodeURIComponent('Payment Proof Submission');
+    const body = encodeURIComponent(buildPaymentProofMessage());
+    window.location.href = `mailto:muhammadabdal15140@gmail.com?subject=${subject}&body=${body}`;
+  });
+}
+
+function buildPaymentProofMessage() {
+  const name = document.querySelector('#payment-name')?.value.trim() || 'Client';
+  const method = document.querySelector('#payment-method')?.value || 'Payment';
+  const reference = document.querySelector('#payment-reference')?.value.trim() || 'Not provided';
+  const file = document.querySelector('#payment-screenshot')?.files?.[0];
+  const screenshotName = file ? file.name : 'Screenshot will be attached manually';
+
+  return `Payment proof from ${name}
+Payment method: ${method}
+Reference number: ${reference}
+Screenshot: ${screenshotName}
+
+I am sending my payment proof. Please confirm receipt.`;
 }
