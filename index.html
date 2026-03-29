@@ -369,17 +369,18 @@
       <section id="contact" class="contact-section page-section" style="display:none;">
         <h2 class="section-title">Initiate Protocol</h2>
         <div class="contact-container">
-          <form class="contact-form glass-card">
+          <form id="contact-form" class="contact-form glass-card">
             <div class="form-group">
-              <input type="text" placeholder="Designation (Name)" required>
+              <input type="text" id="contact-name" placeholder="Designation (Name)" required>
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Signal Origin (Email)" required>
+              <input type="email" id="contact-email" placeholder="Signal Origin (Email)" required>
             </div>
             <div class="form-group">
-              <textarea placeholder="Transmission Data (Message)" rows="5" required></textarea>
+              <textarea id="contact-message" placeholder="Transmission Data (Message)" rows="5" required></textarea>
             </div>
             <button type="submit" class="btn-primary btn-block">Send Transmission</button>
+            <p id="contact-form-status" class="contact-form-status" aria-live="polite"></p>
           </form>
           
           <div class="contact-socials glass-card">
@@ -402,6 +403,14 @@
               <p>Payment Method</p>
               <strong>JazzCash: 03419007352</strong>
               <strong>UBL: 315533424</strong>
+            </div>
+
+            <div class="contact-inbox glass-subcard">
+              <div class="contact-inbox-head">
+                <h4>Message Inbox</h4>
+                <span>New messages appear here instantly</span>
+              </div>
+              <div id="contact-inbox" class="contact-inbox-list"></div>
             </div>
 
             <div class="payment-proof">
