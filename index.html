@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Specialist Portfolio | CodeWithAbdal</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <link rel="apple-touch-icon" href="./assets/favicon.svg" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- 3D Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Overlay UI -->
+    <div id="app">
+      <!-- Navbar -->
+      <nav class="navbar">
+        <div class="logo">CodeWith<span>Abdal</span></div>
+        <button
+          class="mobile-nav-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          onclick="toggleNavMenu()"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav-links">
+        <button class="nav-btn active" onclick="showSection('hero')">Home</button>
+        <button class="nav-btn" onclick="showSection('services')">Services</button>
+        <button class="nav-btn" onclick="showSection('portfolio')">Portfolio</button>
+        <button class="nav-btn" onclick="showSection('hire')">Fiverr</button>
+        <button class="nav-btn" onclick="showSection('upwork')">Upwork</button>
+        <button class="nav-btn" onclick="showSection('contact')">Connect</button>
+      </nav>
+      </nav>
+
+      <!-- Pages Container -->
+      <div id="pages-container">
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section page-section active">
+        <div class="hero-content">
+          <div class="hero-text">
+            <p class="subtitle">AI & Machine Learning Specialist</p>
+            <h1 class="main-title">Building Intelligent Systems<br>for the Future</h1>
+            <p class="description">
+              I engineer elite, high-performance neural networks and scalable data infrastructure, 
+              bringing mathematical precision to visionary AI products.
+            </p>
+            <div class="hero-cta" style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem;">
+            <a href="#" class="btn-primary" onclick="showSection('portfolio'); return false;">Explore Projects</a>
+            <a href="https://drive.google.com/file/d/1JpySWDQHjUjmjaiJyUiT8-OLuBSxRyZj/view?usp=drive_link" target="_blank" class="btn-secondary"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i>View CV</a>
+            <a href="#" class="btn-secondary" onclick="showSection('contact'); return false;">Initialize Contact</a>
+            <a href="#" class="btn-primary" onclick="showSection('hire'); return false;" style="background: #1dbf73; box-shadow: 0 0 20px rgba(29, 191, 115, 0.4);"><i class="fas fa-handshake" style="margin-right: 8px;"></i>Hire on Fiverr</a>
+            <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank" class="btn-secondary"><i class="fas fa-briefcase" style="margin-right: 8px;"></i>AI on Upwork</a>
+          </div>
+          </div>
+          <div class="profile-container">
+            <div class="profile-ring-outer"></div>
+            <div class="profile-ring-inner"></div>
+            <img src="https://github.com/Abdal-AI.png" alt="Muhammad Abdal - AI Specialist" class="profile-pic" 
+              onerror="this.src='https://ui-avatars.com/api/?name=Abdal+AI&background=8a2be2&color=fff&size=280'"/>
+            <div class="profile-glow"></div>
+            <div class="profile-badge"><i class="fas fa-brain"></i> AI Specialist</div>
+          </div>
+        </div>
+
+        <!-- Hero Skills Strip -->
+        <div class="hero-skills">
+          <p class="hero-skills-label"><i class="fas fa-microchip"></i> Tech Stack</p>
+          <div class="hero-skills-pills">
+            <div class="h-skill-pill" style="--clr: #3776ab"><i class="fab fa-python"></i> Python</div>
+            <div class="h-skill-pill" style="--clr: #a855f7"><i class="fas fa-brain"></i> AI / ML</div>
+            <div class="h-skill-pill" style="--clr: #00f3ff"><i class="fas fa-chart-bar"></i> Data Visualization</div>
+            <div class="h-skill-pill" style="--clr: #f59e0b"><i class="fas fa-table"></i> Data Manipulation</div>
+            <div class="h-skill-pill" style="--clr: #e34f26"><i class="fab fa-html5"></i> HTML / WordPress</div>
+            <div class="h-skill-pill" style="--clr: #10b981"><i class="fas fa-database"></i> Pandas</div>
+            <div class="h-skill-pill" style="--clr: #f97316"><i class="fas fa-project-diagram"></i> Matplotlib</div>
+            <div class="h-skill-pill" style="--clr: #6366f1"><i class="fas fa-robot"></i> Scikit-Learn</div>
+            <div class="h-skill-pill" style="--clr: #4c8cbf"><i class="fas fa-layer-group"></i> NumPy</div>
+            <div class="h-skill-pill" style="--clr: #ff6f00"><i class="fas fa-fire"></i> TensorFlow</div>
+            <div class="h-skill-pill" style="--clr: #00c1d4"><i class="fas fa-water"></i> Seaborn</div>
+            <div class="h-skill-pill" style="--clr: #4479a1"><i class="fas fa-server"></i> SQL</div>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-target="10">0</span><span class="stat-suffix">+</span>
+            <p class="stat-label">Projects Delivered</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="12">0</span><span class="stat-suffix">+</span>
+            <p class="stat-label">Skills Mastered</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+            <p class="stat-label">Client Satisfaction</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="5">0</span><span class="stat-suffix">★</span>
+            <p class="stat-label">Fiverr Rating</p>
+          </div>
+        </div>
+
+        <div class="home-sub-section">
+          <div class="home-sub-inner">
+            <p class="home-sub-label"><i class="fas fa-layer-group"></i> What I Build</p>
+            <div class="wib-grid">
+              <article class="wib-card">
+                <div class="wib-icon" style="--ic: #8a2be2;"><i class="fas fa-brain"></i></div>
+                <h4>Machine Learning Systems</h4>
+                <p>I design model pipelines, evaluation flows, and deployment-ready machine learning solutions built for practical outcomes, and I handle AI-focused work on Upwork.</p>
+                <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank" class="wib-link">View Upwork AI Profile</a>
+              </article>
+              <article class="wib-card">
+                <div class="wib-icon" style="--ic: #00f3ff;"><i class="fas fa-chart-line"></i></div>
+                <h4>Analytics and Visualization</h4>
+                <p>I turn raw datasets into dashboards, reports, and visual insights using Python, Pandas, Seaborn, and Matplotlib.</p>
+                <a href="#" class="wib-link" onclick="showSection('portfolio'); return false;">View Portfolio</a>
+              </article>
+              <article class="wib-card">
+                <div class="wib-icon" style="--ic: #1dbf73;"><i class="fas fa-rocket"></i></div>
+                <h4>WordPress Development</h4>
+                <p>I build clean, responsive WordPress websites for clients who need a strong web presence, smooth UX, and reliable delivery.</p>
+                <a href="#" class="wib-link" onclick="showSection('hire'); return false;">View Fiverr Service</a>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-sub-section">
+          <div class="home-sub-inner">
+            <p class="home-sub-label"><i class="fas fa-folder-open"></i> Featured Work</p>
+            <div class="feat-grid">
+              <article class="feat-card" onclick="showSection('portfolio')">
+                <img class="feat-img" src="./assets/linear_algebra_ml.png" alt="Linear Algebra for ML preview">
+                <div class="feat-info">
+                  <span class="feat-tag">Math + ML</span>
+                  <h4>Linear Algebra for ML</h4>
+                  <p>Foundational notebooks and practical concepts that strengthen machine learning intuition.</p>
+                </div>
+              </article>
+              <article class="feat-card" onclick="showSection('portfolio')">
+                <img class="feat-img" src="./assets/seaborn_viz.png" alt="Data visualization preview">
+                <div class="feat-info">
+                  <span class="feat-tag">Visualization</span>
+                  <h4>Data Visualization Mastery</h4>
+                  <p>Insightful visual analysis built around real datasets and polished presentation-ready graphics.</p>
+                </div>
+              </article>
+              <article class="feat-card" onclick="showSection('portfolio')">
+                <img class="feat-img" src="./assets/pandas_data.png" alt="Pandas analytics preview">
+                <div class="feat-info">
+                  <span class="feat-tag">Analytics</span>
+                  <h4>Advanced Pandas Analytics</h4>
+                  <p>Large-scale data cleaning, transformation, and exploration workflows for meaningful business insights.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-sub-section">
+          <div class="home-sub-inner">
+            <p class="home-sub-label"><i class="fas fa-star"></i> Reviews</p>
+            <div class="reviews-layout">
+              <div class="reviews-panel glass-card">
+                <div class="reviews-summary">
+                  <div>
+                    <p class="reviews-kicker">Client Feedback</p>
+                    <h3>Anyone can leave a review</h3>
+                  </div>
+                  <div class="reviews-score">
+                    <span id="review-average">5.0</span>
+                    <small>Average rating</small>
+                  </div>
+                </div>
+                <div id="reviews-list" class="reviews-list"></div>
+              </div>
+
+              <form id="review-form" class="review-form glass-card">
+                <h3>Pass Your Review</h3>
+                <p class="review-form-copy">Visitors can share their experience here. New reviews appear instantly on this device.</p>
+                <div class="form-group">
+                  <input type="text" id="review-name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                  <select id="review-rating" required>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <textarea id="review-message" rows="4" placeholder="Write your review here..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Submit Review</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-cta-banner">
+          <div class="home-cta-glow"></div>
+          <div class="home-cta-content">
+            <p class="home-cta-eyebrow">Let’s Build Something Smart</p>
+            <h2>Need help with AI, ML, or data work?</h2>
+            <p class="home-cta-sub">AI and machine learning projects are handled on Upwork, while WordPress website development is offered separately on Fiverr.</p>
+            <div class="hero-cta" style="justify-content: center; margin-top: 2rem;">
+              <a href="#" class="btn-primary" onclick="showSection('contact'); return false;">Start a Conversation</a>
+              <a href="#" class="btn-secondary" onclick="showSection('hire'); return false;">See WordPress Fiverr</a>
+              <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank" class="btn-secondary">View AI Upwork</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services / Glassmorphism Cards -->
+      <section id="services" class="services-section page-section" style="display:none;">
+        <h2 class="section-title">Core Competencies</h2>
+        <div class="cards-grid">
+          <div class="glass-card">
+            <div class="card-icon">🧠</div>
+            <h3>Machine Learning Models</h3>
+            <p>Designing, training, and deploying state-of-the-art predictive models and generative AI.</p>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon">📊</div>
+            <h3>Data Analytics</h3>
+            <p>Extracting high-value insights from complex, large-scale data utilizing modern pipelines.</p>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon">⚡</div>
+            <h3>AI Integration</h3>
+            <p>Seamlessly embedding AI models into production environments and scalable APIs.</p>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 6rem;">Technological Orbit</h2>
+        <div class="skills-inline-container">
+          <div class="skill-pill">Python</div>
+          <div class="skill-pill">AI</div>
+          <div class="skill-pill">WordPress</div>
+          <div class="skill-pill">Data Manipulation</div>
+          <div class="skill-pill">Data Visualization</div>
+          <div class="skill-pill">Pandas</div>
+          <div class="skill-pill">Matplotlib</div>
+          <div class="skill-pill">Machine Learning</div>
+          <div class="skill-pill">Scikit-Learn</div>
+          <div class="skill-pill">C++</div>
+          <div class="skill-pill">HTML</div>
+        </div>
+      </section>
+
+      <!-- Portfolio Section -->
+      <section id="portfolio" class="portfolio-section page-section" style="display:none;">
+        <h2 class="section-title">Case Studies</h2>
+        <div class="cards-grid portfolio-grid">
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/linear_algebra_ml.png" alt="Linear Algebra ML">
+            <h3>Linear Algebra for ML</h3>
+            <p>Jupyter Notebooks exploring core mathematics and fundamental algorithms essential for ML practitioners.</p>
+            <a href="https://github.com/Abdal-AI/linear-algebra-for-ml" target="_blank" class="btn-secondary sm-btn">View on GitHub</a>
+          </div>
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/seaborn_viz.png" alt="Seaborn Visualizations">
+            <h3>Data Visualization Mastery</h3>
+            <p>Extensive libraries of data visualizations, analytical plots, and tutorials exploring real-world data distributions.</p>
+            <a href="https://github.com/Abdal-AI/SEABORN" target="_blank" class="btn-secondary sm-btn">View Code</a>
+          </div>
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/matplotlib_plot.png" alt="Matplotlib Plots">
+            <h3>Interactive Data Plotting</h3>
+            <p>Developing robust, professional graphs, scatter plots, and statistical charting using matplotlib fundamentals.</p>
+            <a href="https://github.com/Abdal-AI/MATPLOTLIB" target="_blank" class="btn-secondary sm-btn">View Code</a>
+          </div>
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/pandas_data.png" alt="Pandas Analytics">
+            <h3>Advanced Pandas Analytics</h3>
+            <p>Handling large-scale realistic datasets, executing complex data cleaning, and feature engineering workflows.</p>
+            <a href="https://github.com/Abdal-AI/PANDAS" target="_blank" class="btn-secondary sm-btn">View Code</a>
+          </div>
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/ml_tasks.png" alt="Machine Learning Internship Tasks">
+            <h3>Real-world ML Tasks</h3>
+            <p>Practical AI problems, automation scripting, and applied data science solutions built during industry internship.</p>
+            <a href="https://github.com/Abdal-AI/INTERNSHIP-TASK" target="_blank" class="btn-secondary sm-btn">View Code</a>
+          </div>
+          <div class="glass-card project-card">
+            <img class="project-img-real" src="./assets/kaggle_algo.png" alt="Kaggle Datasets and Neural Nets">
+            <h3>ML Algorithm Exploration</h3>
+            <p>Deeply engaged in Python ML challenges, exploring predictive algorithms and advanced data extraction pipelines.</p>
+            <a href="https://www.kaggle.com/muhammadabdal123" target="_blank" class="btn-secondary sm-btn">Kaggle Profile</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hire Me Section (Fiverr) -->
+      <section id="hire" class="page-section hire-section" style="display: none;">
+        <h2 class="section-title">WordPress Fiverr Services</h2>
+        <div class="fiverr-banner glass-card">
+           <div style="font-size: 3rem; color: #1dbf73; margin-bottom: 1rem;"><i class="fas fa-handshake"></i></div>
+           <h3>Need a Professional WordPress Website?</h3>
+           <p style="max-width: 600px; margin: 1rem auto; color: var(--text-secondary);">My Fiverr service is focused on WordPress development, helping clients launch responsive, polished, and business-ready websites.</p>
+           <ul class="fiverr-perks">
+             <li><i class="fas fa-check-circle" style="color: #1dbf73; margin-right: 8px;"></i> Rapid Delivery</li>
+             <li><i class="fas fa-check-circle" style="color: #1dbf73; margin-right: 8px;"></i> Responsive WordPress Design</li>
+             <li><i class="fas fa-check-circle" style="color: #1dbf73; margin-right: 8px;"></i> Post-Launch Support</li>
+           </ul>
+           <a href="https://www.fiverr.com/abdalkhan1514" class="btn-primary" target="_blank" style="background: #1dbf73; box-shadow: 0 0 20px rgba(29, 191, 115, 0.4); margin-top: 2rem;">
+             <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i> Place Order on Fiverr
+           </a>
+        </div>
+        <div class="payment-banner glass-card">
+          <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+          <h3>Direct Payment Method</h3>
+          <p>JazzCash is available for direct payments if we agree on the project outside marketplaces.</p>
+          <div class="payment-number">JazzCash: 03419007352</div>
+          <div class="payment-number">UBL: 315533424</div>
+        </div>
+      </section>
+
+      <section id="upwork" class="page-section hire-section" style="display: none;">
+        <h2 class="section-title">AI Upwork Services</h2>
+        <div class="fiverr-banner glass-card upwork-banner">
+           <div style="font-size: 3rem; color: #14a800; margin-bottom: 1rem;"><i class="fas fa-briefcase"></i></div>
+           <h3>Need AI, ML, or Data Expertise?</h3>
+           <p style="max-width: 600px; margin: 1rem auto; color: var(--text-secondary);">My Upwork profile is focused on AI services, including machine learning, analytics, data processing, model support, and Python-based intelligent solutions.</p>
+           <ul class="fiverr-perks">
+             <li><i class="fas fa-check-circle" style="color: #14a800; margin-right: 8px;"></i> Machine Learning Support</li>
+             <li><i class="fas fa-check-circle" style="color: #14a800; margin-right: 8px;"></i> Data Analytics and Python</li>
+             <li><i class="fas fa-check-circle" style="color: #14a800; margin-right: 8px;"></i> AI Project Collaboration</li>
+           </ul>
+           <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" class="btn-primary" target="_blank" style="background: #14a800; box-shadow: 0 0 20px rgba(20, 168, 0, 0.35); margin-top: 2rem;">
+             <i class="fas fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Hire on Upwork
+           </a>
+        </div>
+        <div class="payment-banner glass-card upwork-payment">
+          <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+          <h3>Direct Payment Method</h3>
+          <p>For approved direct arrangements, JazzCash is available as a payment option.</p>
+          <div class="payment-number">JazzCash: 03419007352</div>
+          <div class="payment-number">UBL: 315533424</div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact-section page-section" style="display:none;">
+        <h2 class="section-title">Initiate Protocol</h2>
+        <div class="contact-container">
+          <form id="contact-form" class="contact-form glass-card">
+            <div class="form-group">
+              <input type="text" id="contact-name" placeholder="Designation (Name)" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="contact-email" placeholder="Signal Origin (Email)" required>
+            </div>
+            <div class="form-group">
+              <textarea id="contact-message" placeholder="Transmission Data (Message)" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-block">Send Transmission</button>
+            <p id="contact-form-status" class="contact-form-status" aria-live="polite"></p>
+          </form>
+          
+          <div class="contact-socials glass-card">
+            <h3>Code Links</h3>
+            <div class="social-links">
+              <a href="https://github.com/Abdal-AI" target="_blank" class="social-btn" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/muhammad-abdal-619451299/" target="_blank" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://www.kaggle.com/muhammadabdal123" target="_blank" class="social-btn" aria-label="Kaggle"><i class="fab fa-kaggle"></i></a>
+              <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank" class="social-btn" aria-label="Upwork"><i class="fas fa-briefcase"></i></a>
+            
+              <a href="https://wa.me/923419007352" target="_blank" class="social-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="contact-email" style="margin-top: 2rem; text-align: center;">
+              <p style="margin-bottom: 1rem; color: var(--text-secondary);">Direct Connection:</p>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadabdal15140@gmail.com" target="_blank" class="btn-primary">
+                <i class="fas fa-envelope" style="margin-right: 8px;"></i> Email via Gmail
+              </a>
+            </div>
+            <div class="payment-inline">
+              <p>Payment Method</p>
+              <strong>JazzCash: 03419007352</strong>
+              <strong>UBL: 315533424</strong>
+            </div>
+
+            <div class="contact-inbox glass-subcard">
+              <div class="contact-inbox-head">
+                <h4>Message Inbox</h4>
+                <span>New messages appear here instantly</span>
+              </div>
+              <div id="contact-inbox" class="contact-inbox-list"></div>
+            </div>
+
+            <div class="payment-proof">
+              <h4>Send Payment Screenshot</h4>
+              <p class="payment-proof-copy">After payment, upload your screenshot here and use one of the buttons below to send the payment proof.</p>
+              <div class="form-group">
+                <input type="text" id="payment-name" placeholder="Your name">
+              </div>
+              <div class="form-group">
+                <select id="payment-method">
+                  <option value="JazzCash">JazzCash</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Fiverr">Fiverr</option>
+                  <option value="Upwork">Upwork</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" id="payment-reference" placeholder="Transaction ID / reference number">
+              </div>
+              <div class="form-group">
+                <input type="file" id="payment-screenshot" accept="image/*">
+              </div>
+              <div id="payment-preview" class="payment-preview" hidden>
+                <img id="payment-preview-image" alt="Payment screenshot preview">
+                <p id="payment-preview-name"></p>
+              </div>
+              <div class="payment-actions">
+                <button type="button" id="send-proof-whatsapp" class="btn-primary">Send on WhatsApp</button>
+                <button type="button" id="send-proof-email" class="btn-secondary">Send by Email</button>
+              </div>
+              <p class="payment-proof-note">The screenshot preview is for confirmation here. Your browser cannot attach the image automatically, so after clicking WhatsApp or Email, please attach the same screenshot manually.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div> <!-- /Pages Container -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">CodeWith<span>Abdal</span></div>
+          <p class="footer-summary">AI, machine learning, and data services crafted for practical results and clean delivery.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="#" onclick="showSection('hero'); return false;">Home</a>
+            <a href="#" onclick="showSection('services'); return false;">Services</a>
+            <a href="#" onclick="showSection('portfolio'); return false;">Portfolio</a>
+            <a href="#" onclick="showSection('hire'); return false;">Fiverr</a>
+            <a href="#" onclick="showSection('contact'); return false;">Contact</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Connect</h4>
+          <div class="footer-links footer-social-links">
+            <a href="https://github.com/Abdal-AI" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/muhammad-abdal-619451299/" target="_blank">LinkedIn</a>
+            <a href="https://www.kaggle.com/muhammadabdal123" target="_blank">Kaggle</a>
+            <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank">Upwork</a>
+            <a href="mailto:muhammadabdal15140@gmail.com">Email</a>
+          </div>
+        </div>
+        <div class="footer-column footer-cta">
+          <h4>Open For Work</h4>
+          <p>Available for WordPress website development on Fiverr and AI-focused project work on Upwork.</p>
+          <a href="https://www.upwork.com/freelancers/~016798e9d779c76f73?mp_source=share" target="_blank" class="btn-primary">Hire on Upwork</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2026 Abdal - AI Specialist. System Nominal.</p>
+      </div>
+    </footer>
+
+    <div class="chatbot-shell">
+      <button id="chatbot-toggle" class="chatbot-toggle" type="button" aria-label="Open chat assistant" aria-expanded="false">
+        <i class="fas fa-comments"></i>
+      </button>
+      <div id="chatbot-panel" class="chatbot-panel" hidden>
+        <div class="chatbot-header">
+          <div>
+            <p class="chatbot-kicker">CodeWithAbdal Assistant</p>
+            <h3>Ask the chatbot</h3>
+          </div>
+          <button id="chatbot-close" class="chatbot-close" type="button" aria-label="Close chat">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages"></div>
+        <form id="chatbot-form" class="chatbot-form">
+          <input id="chatbot-input" type="text" placeholder="Ask about services, Fiverr, or contact..." required>
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- SPA Router - must be plain (non-module) script so onclick= can call it -->
+    <script>
+      function closeNavMenu() {
+        var nav = document.querySelector('.nav-links');
+        var toggle = document.querySelector('.mobile-nav-toggle');
+        if (!nav || !toggle) return;
+        nav.classList.remove('open');
+        toggle.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleNavMenu() {
+        var nav = document.querySelector('.nav-links');
+        var toggle = document.querySelector('.mobile-nav-toggle');
+        if (!nav || !toggle) return;
+        var isOpen = nav.classList.toggle('open');
+        toggle.classList.toggle('active', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      function showSection(sectionId) {
+        // Hide all page-section tabs
+        document.querySelectorAll('.page-section').forEach(function(sec) {
+          if (!sec.classList.contains('home-sub-section')) {
+            sec.style.display = 'none';
+            sec.classList.remove('active');
+          }
+        });
+        // Show / hide home sub-sections together with hero
+        var isHome = (sectionId === 'hero');
+        document.querySelectorAll('.home-sub-section').forEach(function(sub) {
+          sub.style.display = isHome ? '' : 'none';
+        });
+        // Show target
+        var target = document.getElementById(sectionId);
+        if (!target) return;
+        target.style.display = '';
+        target.classList.add('active');
+        // Update active nav button
+        document.querySelectorAll('.nav-btn').forEach(function(btn) {
+          btn.classList.remove('active');
+          var oc = btn.getAttribute('onclick') || '';
+          if (oc.indexOf("'" + sectionId + "'") !== -1) {
+            btn.classList.add('active');
+          }
+        });
+        closeNavMenu();
+        // Trigger stat counters when home shown
+        if (sectionId === 'hero') animateCounters();
+      }
+
+      function animateCounters() {
+        document.querySelectorAll('.stat-number').forEach(function(el) {
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          var start = 0;
+          var duration = 1500;
+          var step = target / (duration / 16);
+          el.textContent = '0';
+          var timer = setInterval(function() {
+            start += step;
+            if (start >= target) { start = target; clearInterval(timer); }
+            el.textContent = Math.floor(start);
+          }, 16);
+        });
+      }
+
+      // Run on initial load
+      document.addEventListener('DOMContentLoaded', function() {
+        animateCounters();
+
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 900) closeNavMenu();
+        });
+      });
+    </script>
+    <!-- Module Scripts -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
