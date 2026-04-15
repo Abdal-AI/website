@@ -1631,7 +1631,7 @@ canvas {
   padding: 1.2rem;
   border-radius: 16px;
   border: 1px solid var(--glass-border);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
 }
 .review-card-head {
   display: flex;
@@ -1663,6 +1663,10 @@ canvas {
   color: var(--text-primary);
   font-family: var(--font-main);
   appearance: none;
+}
+option {
+  background: var(--obsidian-black);
+  color: var(--text-primary);
 }
 
 /* Chatbot */
