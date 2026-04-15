@@ -1692,11 +1692,9 @@ canvas {
   display: none;
   flex-direction: column;
   border-radius: 24px;
-  border: 1px solid var(--glass-border);
-  background: rgba(248, 249, 255, 0.98);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 24px 50px rgba(15, 15, 26, 0.15);
+  border: 1px solid var(--electric-violet);
+  background: var(--obsidian-deep);
+  box-shadow: 0 24px 50px rgba(168, 255, 62, 0.15);
   overflow: hidden;
 }
 .chatbot-panel.is-open {
@@ -1733,13 +1731,14 @@ canvas {
   color: var(--text-primary);
 }
 .chatbot-bubble.bot {
-  background: rgba(240, 242, 255, 0.95);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--glass-border);
 }
 .chatbot-bubble.user {
   justify-self: end;
-  background: linear-gradient(135deg, rgba(108, 43, 217, 0.9), rgba(26, 79, 214, 0.8));
-  color: #fff;
+  background: var(--electric-violet);
+  color: var(--obsidian-deep);
+  font-weight: 600;
 }
 .chatbot-form {
   display: grid;
