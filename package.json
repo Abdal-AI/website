@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@supabase/supabase-js": "^2.100.1",
     "gsap": "^3.12.5",
     "three": "^0.160.0"

@@ -37,6 +37,7 @@
         <button class="nav-btn active" onclick="showSection('hero')">Home</button>
         <button class="nav-btn" onclick="showSection('services')">Services</button>
         <button class="nav-btn" onclick="showSection('portfolio')">Portfolio</button>
+        <button class="nav-btn" onclick="showSection('blog')">Blog</button>
         <button class="nav-btn" onclick="showSection('hire')">Fiverr</button>
         <button class="nav-btn" onclick="showSection('upwork')">Upwork</button>
         <button class="nav-btn" onclick="showSection('contact')">Connect</button>
@@ -67,7 +68,7 @@
           </div>
           <div class="profile-container">
             <img src="./assets/profile-real.jpg" alt="Muhammad Abdal - AI Specialist" class="profile-pic" />
-            <div class="profile-badge">STATUS: ONLINE</div>
+
           </div>
         </div>
 
@@ -398,6 +399,27 @@
           <p>For approved direct arrangements, JazzCash is available as a payment option.</p>
           <div class="payment-number">JazzCash: 03419007352</div>
           <div class="payment-number">UBL: 315533424</div>
+        </div>
+      </section>
+
+      <!-- Blog Section -->
+      <section id="blog" class="blog-section page-section" style="display:none;">
+        <!-- Blog Feed View -->
+        <div id="blog-feed" class="blog-feed-wrapper">
+          <div class="blog-header">
+            <p class="blog-kicker"><i class="fas fa-rss"></i> Latest Posts</p>
+            <h2 class="section-title">The Abdal Blog</h2>
+            <p class="blog-subtitle">Thoughts on AI, Machine Learning, Data Science, and Web Development — published regularly.</p>
+          </div>
+          <div id="blog-grid" class="blog-grid"></div>
+        </div>
+
+        <!-- Single Article View -->
+        <div id="blog-article" class="blog-article-wrapper" hidden>
+          <button id="blog-back-btn" class="blog-back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Blog
+          </button>
+          <article id="blog-article-content" class="blog-article-content glass-card"></article>
         </div>
       </section>
 

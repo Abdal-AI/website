@@ -5,6 +5,7 @@ import {
   insertRemoteReview
 } from './supabase.js';
 import gsap from 'gsap';
+import emailjs from '@emailjs/browser';
 
 const defaultReviews = [
   {
@@ -255,15 +256,52 @@ function initContactForm() {
   const savedThreads = loadContactThreads();
   renderContactThreads(savedThreads, inbox);
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const name = document.querySelector('#contact-name')?.value.trim();
     const email = document.querySelector('#contact-email')?.value.trim();
     const message = document.querySelector('#contact-message')?.value.trim();
+    const submitBtn = form.querySelector('button[type="submit"]');
 
     if (!name || !email || !message) {
       status.textContent = 'Please complete all fields before sending.';
+      status.classList.add('is-visible');
+      return;
+    }
+
+    const prevBtnText = submitBtn ? submitBtn.textContent : 'Send Fast';
+    if (submitBtn) submitBtn.textContent = 'Sending Engine...';
+
+    // Attempt to send real email via EmailJS (requires Vite env vars)
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    let emailSentSuccessfully = false;
+
+    if (serviceId && templateId && publicKey) {
+      try {
+        emailjs.init({ publicKey });
+        await emailjs.send(serviceId, templateId, {
+          from_name: name,
+          from_email: email,
+          message: message,
+          reply_to: email,
+        });
+        emailSentSuccessfully = true;
+      } catch (error) {
+        console.error('EmailJS failed:', error);
+      }
+    } else {
+      console.warn('VITE_EMAILJS keys not configured. Simulating successful send locally.');
+      emailSentSuccessfully = true; // Fallback to local fake flow
+    }
+
+    if (submitBtn) submitBtn.textContent = prevBtnText;
+
+    if (!emailSentSuccessfully) {
+      status.textContent = 'Error: Failed to send email via EmailJS. Please try again.';
       status.classList.add('is-visible');
       return;
     }
@@ -280,7 +318,7 @@ function initContactForm() {
       role: 'system',
       name: 'CodeWithAbdal',
       email: 'muhammadabdal15140@gmail.com',
-      message: buildContactReply(name, message),
+      message: serviceId ? `Thank you ${name}, I have just received your email directly in my inbox! I will review your requirements and respond back to ${email} soon.` : buildContactReply(name, message),
       time: new Date().toLocaleString()
     };
 
@@ -288,7 +326,7 @@ function initContactForm() {
     localStorage.setItem('codewithabdal-contact-inbox', JSON.stringify(nextThreads));
     renderContactThreads(nextThreads, inbox);
 
-    status.textContent = 'Message sent successfully. A confirmation reply has been received below.';
+    status.textContent = serviceId ? 'Email directly sent to Abdal! Check your inbox below.' : 'Message sent successfully. A simulated reply has been received below.';
     status.classList.add('is-visible');
     form.reset();
   });
