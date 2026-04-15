@@ -1,5 +1,4 @@
 import { initThreeScene } from './three-scene.js';
-import { initCursor } from './cursor.js';
 import {
   fetchRemoteReviews,
   hasSupabaseConfig,
@@ -27,9 +26,6 @@ const defaultReviews = [
 
 // Initialize the 3D Neural Gravity Background & Cursor
 initThreeScene();
-if (window.matchMedia('(pointer: fine)').matches) {
-  initCursor();
-}
 
 // ── Global SPA Navigation ───────────────────────────────────────────────────
 // Must be on window BEFORE any inline onclick="" fires
