@@ -265,13 +265,9 @@ function initChatbot() {
 
 function initContactForm() {
   const form = document.querySelector('#contact-form');
-  const inbox = document.querySelector('#contact-inbox');
   const status = document.querySelector('#contact-form-status');
 
-  if (!form || !inbox || !status) return;
-
-  const savedThreads = loadContactThreads();
-  renderContactThreads(savedThreads, inbox);
+  if (!form || !status) return;
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -315,26 +311,6 @@ function initContactForm() {
       status.classList.add('is-visible');
       return;
     }
-
-    const userEntry = {
-      role: 'user',
-      name,
-      email,
-      message: `${projectType}: ${message}`,
-      time: new Date().toLocaleString()
-    };
-
-    const replyEntry = {
-      role: 'system',
-      name: 'CodeWithAbdal',
-      email: recipientEmail,
-      message: `Thank you ${name}, I have received your message by email. I will review your requirements and respond back to ${email} soon.`,
-      time: new Date().toLocaleString()
-    };
-
-    const nextThreads = [replyEntry, userEntry, ...loadContactThreads()].slice(0, 12);
-    localStorage.setItem('codewithabdal-contact-inbox', JSON.stringify(nextThreads));
-    renderContactThreads(nextThreads, inbox);
 
     status.textContent = 'Message sent successfully to my email.';
     status.classList.add('is-visible');
@@ -523,58 +499,6 @@ function initPaymentProof() {
     const body = encodeURIComponent(buildPaymentProofMessage());
     window.location.href = `mailto:muhammadabdal15140@gmail.com?subject=${subject}&body=${body}`;
   });
-}
-
-function loadContactThreads() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('codewithabdal-contact-inbox') || 'null');
-    if (Array.isArray(saved) && saved.length) return saved;
-  } catch {}
-
-  return [
-    {
-      role: 'system',
-      name: 'CodeWithAbdal',
-      email: 'muhammadabdal15140@gmail.com',
-      message: 'Inbox ready. Send a message from the form and the latest conversation will appear here.',
-      time: new Date().toLocaleString()
-    }
-  ];
-}
-
-function renderContactThreads(threads, container) {
-  container.innerHTML = threads
-    .map(
-      (thread) => `
-        <article class="contact-inbox-item ${thread.role}">
-          <div class="contact-inbox-meta">
-            <strong>${escapeHtml(thread.name)}</strong>
-            <span>${escapeHtml(thread.time)}</span>
-          </div>
-          <p>${escapeHtml(thread.message)}</p>
-          <small>${escapeHtml(thread.email)}</small>
-        </article>
-      `
-    )
-    .join('');
-}
-
-function buildContactReply(name, message) {
-  const normalized = message.toLowerCase();
-
-  if (hasAny(normalized, ['wordpress', 'website', 'fiverr'])) {
-    return `Thank you ${name}, your WordPress inquiry has been received. Please share your website goals, number of pages, and any reference design, and a Fiverr-friendly reply will be prepared.`;
-  }
-
-  if (hasAny(normalized, ['ai', 'ml', 'machine learning', 'data', 'analytics', 'upwork'])) {
-    return `Thank you ${name}, your AI and data message has been received. Please send the project scope, dataset details, and deadline so the Upwork workflow can be discussed clearly.`;
-  }
-
-  if (hasAny(normalized, ['price', 'budget', 'cost'])) {
-    return `Thank you ${name}, your pricing request has been received. A quote can be shared once the project scope, features, and delivery timeline are confirmed.`;
-  }
-
-  return `Thank you ${name}, your message has been received successfully. A follow-up can continue through email, WhatsApp, Fiverr, or Upwork depending on the project type.`;
 }
 
 function buildPaymentProofMessage() {

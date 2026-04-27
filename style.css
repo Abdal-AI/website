@@ -887,57 +887,6 @@ canvas {
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid var(--glass-border);
 }
-.contact-inbox-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.contact-inbox-head h4 {
-  font-size: 1.05rem;
-}
-.contact-inbox-head span {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  text-align: right;
-}
-.contact-inbox-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  max-height: 320px;
-  overflow-y: auto;
-}
-.contact-inbox-item {
-  padding: 1rem;
-  border-radius: 14px;
-  border: 1px solid rgba(15, 15, 26, 0.1);
-  background: rgba(255, 255, 255, 0.7);
-}
-.contact-inbox-item.system {
-  border-color: rgba(26, 79, 214, 0.25);
-  background: rgba(26, 79, 214, 0.06);
-}
-.contact-inbox-item.user {
-  border-color: rgba(108, 43, 217, 0.25);
-  background: rgba(108, 43, 217, 0.06);
-}
-.contact-inbox-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.55rem;
-  font-size: 0.85rem;
-}
-.contact-inbox-meta span,
-.contact-inbox-item small {
-  color: var(--text-secondary);
-}
-.contact-inbox-item p {
-  line-height: 1.65;
-  margin-bottom: 0.55rem;
-}
 .payment-proof {
   margin-top: 1.75rem;
   padding-top: 1.5rem;
