@@ -138,6 +138,8 @@ message
 reply_to
 ```
 
+If EmailJS is not configured, the form falls back to FormSubmit and sends to `VITE_CONTACT_TO_EMAIL`. On the first submission, FormSubmit may send an activation email to that inbox. Confirm it once, then future website messages will arrive by email.
+
 ## Database Schema
 
 The SQL setup file is:

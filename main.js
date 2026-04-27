@@ -296,32 +296,20 @@ function initContactForm() {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
     const recipientEmail = import.meta.env.VITE_CONTACT_TO_EMAIL || 'muhammadabdal15140@gmail.com';
 
-    let emailSentSuccessfully = false;
-
-    if (hasEmailJsConfig(serviceId, templateId, publicKey)) {
-      try {
-        emailjs.init({ publicKey });
-        await emailjs.send(serviceId, templateId, {
-          to_email: recipientEmail,
-          from_name: name,
-          from_email: email,
-          user_name: name,
-          user_email: email,
-          message: message,
-          reply_to: email
-        });
-        emailSentSuccessfully = true;
-      } catch (error) {
-        console.error('EmailJS failed:', error);
-      }
-    } else {
-      console.warn('EmailJS is not configured. Add VITE_EMAILJS_* keys to .env to enable live email.');
-    }
+    const emailSentSuccessfully = await sendContactEmail({
+      name,
+      email,
+      message,
+      recipientEmail,
+      serviceId,
+      templateId,
+      publicKey
+    });
 
     if (submitBtn) submitBtn.textContent = prevBtnText;
 
     if (!emailSentSuccessfully) {
-      status.textContent = 'Email is not configured yet. Please set EmailJS keys in .env, or email me directly at muhammadabdal15140@gmail.com.';
+      status.textContent = 'Email could not be sent. Please email me directly at muhammadabdal15140@gmail.com.';
       status.classList.add('is-visible');
       return;
     }
@@ -356,6 +344,49 @@ function hasEmailJsConfig(serviceId, templateId, publicKey) {
   return [serviceId, templateId, publicKey].every(
     (value) => value && !String(value).startsWith('your-')
   );
+}
+
+async function sendContactEmail({ name, email, message, recipientEmail, serviceId, templateId, publicKey }) {
+  if (hasEmailJsConfig(serviceId, templateId, publicKey)) {
+    try {
+      emailjs.init({ publicKey });
+      await emailjs.send(serviceId, templateId, {
+        to_email: recipientEmail,
+        from_name: name,
+        from_email: email,
+        user_name: name,
+        user_email: email,
+        message,
+        reply_to: email
+      });
+      return true;
+    } catch (error) {
+      console.error('EmailJS failed:', error);
+    }
+  }
+
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        _subject: `New website message from ${name}`,
+        _template: 'table',
+        _captcha: 'false'
+      })
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('FormSubmit failed:', error);
+    return false;
+  }
 }
 
 function appendChatMessage(container, role, text) {
