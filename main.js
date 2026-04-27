@@ -2,7 +2,8 @@ import { initThreeScene } from './three-scene.js';
 import {
   fetchRemoteReviews,
   hasSupabaseConfig,
-  insertRemoteReview
+  insertRemoteReview,
+  subscribeToRemoteReviews
 } from './supabase.js';
 import gsap from 'gsap';
 import emailjs from '@emailjs/browser';
@@ -121,14 +122,25 @@ async function initReviews() {
   const initialReviews = await getReviews();
   renderReviews(initialReviews, reviewsList, reviewAverage);
 
+  subscribeToRemoteReviews((remoteReviews) => {
+    renderReviews(remoteReviews, reviewsList, reviewAverage);
+  });
+
   reviewForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const name = document.querySelector('#review-name')?.value.trim();
     const rating = Number(document.querySelector('#review-rating')?.value || 5);
     const message = document.querySelector('#review-message')?.value.trim();
+    const submitBtn = reviewForm.querySelector('button[type="submit"]');
 
     if (!name || !message) return;
+
+    const previousButtonText = submitBtn?.textContent || 'Submit Review';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving Review...';
+    }
 
     const nextReviews = [
       {
@@ -147,6 +159,11 @@ async function initReviews() {
     const refreshedReviews = savedRemotely ? await getReviews() : nextReviews;
     renderReviews(refreshedReviews, reviewsList, reviewAverage);
     reviewForm.reset();
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = previousButtonText;
+    }
   });
 }
 

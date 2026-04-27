@@ -3,7 +3,15 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-export const hasSupabaseConfig = Boolean(supabaseUrl && supabaseKey);
+function hasRealValue(value) {
+  return Boolean(
+    value &&
+      !String(value).startsWith('your-') &&
+      !String(value).includes('your-project-id')
+  );
+}
+
+export const hasSupabaseConfig = hasRealValue(supabaseUrl) && hasRealValue(supabaseKey);
 
 export const supabase = hasSupabaseConfig
   ? createClient(supabaseUrl, supabaseKey)
@@ -41,4 +49,24 @@ export async function insertRemoteReview(review) {
   }
 
   return true;
+}
+
+export function subscribeToRemoteReviews(onChange) {
+  if (!supabase) return null;
+
+  const channel = supabase
+    .channel('public:reviews')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'reviews' },
+      async () => {
+        const reviews = await fetchRemoteReviews();
+        if (reviews) onChange(reviews);
+      }
+    )
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
 }

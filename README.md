@@ -106,6 +106,7 @@ If you want live reviews with a real database:
 2. Run the SQL from `supabase-schema.sql`
 3. Create a `.env` file using `.env.example`
 4. Add your Supabase project values
+5. Deploy with the same Supabase environment variables so reviews appear on all devices
 
 Example:
 
@@ -146,6 +147,7 @@ supabase-schema.sql
 ```
 
 It creates a `reviews` table and enables public read/insert access for review submissions.
+It also enables Supabase Realtime for the `reviews` table, so open devices can update when a new review is posted.
 
 ## Project Files
 
