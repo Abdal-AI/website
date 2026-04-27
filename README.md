@@ -114,6 +114,29 @@ VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
 ```
 
+## Contact Email Setup
+
+The contact form sends messages through EmailJS. Create a `.env` file from `.env.example` and add your EmailJS values:
+
+```env
+VITE_CONTACT_TO_EMAIL=muhammadabdal15140@gmail.com
+VITE_EMAILJS_SERVICE_ID=your-emailjs-service-id
+VITE_EMAILJS_TEMPLATE_ID=your-emailjs-template-id
+VITE_EMAILJS_PUBLIC_KEY=your-emailjs-public-key
+```
+
+In your EmailJS template, include these variables:
+
+```text
+to_email
+from_name
+from_email
+user_name
+user_email
+message
+reply_to
+```
+
 ## Database Schema
 
 The SQL setup file is:
@@ -142,7 +165,7 @@ This site can be deployed easily on:
 - Netlify
 - GitHub Pages
 
-For live reviews, make sure your deployment platform also has the Supabase environment variables set.
+For live reviews and contact emails, make sure your deployment platform also has the Supabase and EmailJS environment variables set.
 
 ## Repository
 

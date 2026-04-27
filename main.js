@@ -273,35 +273,38 @@ function initContactForm() {
     const prevBtnText = submitBtn ? submitBtn.textContent : 'Send Fast';
     if (submitBtn) submitBtn.textContent = 'Sending Engine...';
 
-    // Attempt to send real email via EmailJS (requires Vite env vars)
+    // Send real email via EmailJS. Configure these in .env before deploying.
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const recipientEmail = import.meta.env.VITE_CONTACT_TO_EMAIL || 'muhammadabdal15140@gmail.com';
 
     let emailSentSuccessfully = false;
 
-    if (serviceId && templateId && publicKey) {
+    if (hasEmailJsConfig(serviceId, templateId, publicKey)) {
       try {
         emailjs.init({ publicKey });
         await emailjs.send(serviceId, templateId, {
+          to_email: recipientEmail,
           from_name: name,
           from_email: email,
+          user_name: name,
+          user_email: email,
           message: message,
-          reply_to: email,
+          reply_to: email
         });
         emailSentSuccessfully = true;
       } catch (error) {
         console.error('EmailJS failed:', error);
       }
     } else {
-      console.warn('VITE_EMAILJS keys not configured. Simulating successful send locally.');
-      emailSentSuccessfully = true; // Fallback to local fake flow
+      console.warn('EmailJS is not configured. Add VITE_EMAILJS_* keys to .env to enable live email.');
     }
 
     if (submitBtn) submitBtn.textContent = prevBtnText;
 
     if (!emailSentSuccessfully) {
-      status.textContent = 'Error: Failed to send email via EmailJS. Please try again.';
+      status.textContent = 'Email is not configured yet. Please set EmailJS keys in .env, or email me directly at muhammadabdal15140@gmail.com.';
       status.classList.add('is-visible');
       return;
     }
@@ -317,8 +320,8 @@ function initContactForm() {
     const replyEntry = {
       role: 'system',
       name: 'CodeWithAbdal',
-      email: 'muhammadabdal15140@gmail.com',
-      message: serviceId ? `Thank you ${name}, I have just received your email directly in my inbox! I will review your requirements and respond back to ${email} soon.` : buildContactReply(name, message),
+      email: recipientEmail,
+      message: `Thank you ${name}, I have received your message by email. I will review your requirements and respond back to ${email} soon.`,
       time: new Date().toLocaleString()
     };
 
@@ -326,10 +329,16 @@ function initContactForm() {
     localStorage.setItem('codewithabdal-contact-inbox', JSON.stringify(nextThreads));
     renderContactThreads(nextThreads, inbox);
 
-    status.textContent = serviceId ? 'Email directly sent to Abdal! Check your inbox below.' : 'Message sent successfully. A simulated reply has been received below.';
+    status.textContent = 'Message sent successfully to my email.';
     status.classList.add('is-visible');
     form.reset();
   });
+}
+
+function hasEmailJsConfig(serviceId, templateId, publicKey) {
+  return [serviceId, templateId, publicKey].every(
+    (value) => value && !String(value).startsWith('your-')
+  );
 }
 
 function appendChatMessage(container, role, text) {
