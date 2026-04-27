@@ -134,6 +134,7 @@ from_name
 from_email
 user_name
 user_email
+project_type
 message
 reply_to
 ```

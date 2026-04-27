@@ -731,7 +731,7 @@ canvas {
 .form-group {
   margin-bottom: 1.5rem;
 }
-.form-group input, .form-group textarea {
+.form-group input, .form-group textarea, .form-group select {
   width: 100%;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
@@ -741,10 +741,18 @@ canvas {
   font-family: var(--font-main);
   transition: all 0.3s;
 }
-.form-group input:focus, .form-group textarea:focus {
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   outline: none;
   border-color: var(--cyber-blue);
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+.form-group select {
+  appearance: none;
+  cursor: pointer;
+}
+.form-group select option {
+  background: #0d0d0d;
+  color: var(--text-primary);
 }
 .form-group textarea {
   resize: vertical;

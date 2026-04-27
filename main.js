@@ -278,10 +278,11 @@ function initContactForm() {
 
     const name = document.querySelector('#contact-name')?.value.trim();
     const email = document.querySelector('#contact-email')?.value.trim();
+    const projectType = document.querySelector('#contact-project-type')?.value.trim();
     const message = document.querySelector('#contact-message')?.value.trim();
     const submitBtn = form.querySelector('button[type="submit"]');
 
-    if (!name || !email || !message) {
+    if (!name || !email || !projectType || !message) {
       status.textContent = 'Please complete all fields before sending.';
       status.classList.add('is-visible');
       return;
@@ -299,6 +300,7 @@ function initContactForm() {
     const emailSentSuccessfully = await sendContactEmail({
       name,
       email,
+      projectType,
       message,
       recipientEmail,
       serviceId,
@@ -318,7 +320,7 @@ function initContactForm() {
       role: 'user',
       name,
       email,
-      message,
+      message: `${projectType}: ${message}`,
       time: new Date().toLocaleString()
     };
 
@@ -346,7 +348,7 @@ function hasEmailJsConfig(serviceId, templateId, publicKey) {
   );
 }
 
-async function sendContactEmail({ name, email, message, recipientEmail, serviceId, templateId, publicKey }) {
+async function sendContactEmail({ name, email, projectType, message, recipientEmail, serviceId, templateId, publicKey }) {
   if (hasEmailJsConfig(serviceId, templateId, publicKey)) {
     try {
       emailjs.init({ publicKey });
@@ -356,6 +358,7 @@ async function sendContactEmail({ name, email, message, recipientEmail, serviceI
         from_email: email,
         user_name: name,
         user_email: email,
+        project_type: projectType,
         message,
         reply_to: email
       });
@@ -375,8 +378,9 @@ async function sendContactEmail({ name, email, message, recipientEmail, serviceI
       body: JSON.stringify({
         name,
         email,
+        project_type: projectType,
         message,
-        _subject: `New website message from ${name}`,
+        _subject: `New ${projectType} inquiry from ${name}`,
         _template: 'table',
         _captcha: 'false'
       })

@@ -435,6 +435,18 @@
               <input type="email" id="contact-email" placeholder="Signal Origin (Email)" required>
             </div>
             <div class="form-group">
+              <select id="contact-project-type" required>
+                <option value="" disabled selected>Project Type (Website, AI, Data...)</option>
+                <option value="WordPress Website">WordPress Website</option>
+                <option value="Custom Website">Custom Website</option>
+                <option value="AI / Machine Learning">AI / Machine Learning</option>
+                <option value="Data Analysis / Visualization">Data Analysis / Visualization</option>
+                <option value="Automation / Scripting">Automation / Scripting</option>
+                <option value="Bug Fix / Existing Website">Bug Fix / Existing Website</option>
+                <option value="Other Project">Other Project</option>
+              </select>
+            </div>
+            <div class="form-group">
               <textarea id="contact-message" placeholder="Transmission Data (Message)" rows="5" required></textarea>
             </div>
             <button type="submit" class="btn-primary btn-block">Send Transmission</button>
