@@ -1,5 +1,6 @@
 import { initThreeScene } from './three-scene.js';
 import gsap from 'gsap';
+import { blogPosts } from './blog-data.js';
 
 const defaultReviews = [
   {
@@ -104,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initChatbot();
   initContactForm();
   initPaymentProof();
+  initBlog();
 });
 
 function initReviews() {
@@ -433,4 +435,127 @@ Reference number: ${reference}
 Screenshot: ${screenshotName}
 
 I am sending my payment proof. Please confirm receipt.`;
+}
+
+// ── Blog ─────────────────────────────────────────────────────────────────────
+
+const SITE_URL = 'https://website-main-zeta-six.vercel.app';
+const SITE_NAME = 'CodeWithAbdal';
+const DEFAULT_DESC = 'AI, Machine Learning, and Data Science by Muhammad Abdal — practical guides, projects, and freelance services.';
+
+function setPageMeta({ title, description, url, image }) {
+  document.title = title;
+  setMeta('name', 'description', description);
+  setMeta('property', 'og:title', title);
+  setMeta('property', 'og:description', description);
+  setMeta('property', 'og:url', url);
+  if (image) setMeta('property', 'og:image', image);
+  setMeta('name', 'twitter:title', title);
+  setMeta('name', 'twitter:description', description);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute('href', url);
+}
+
+function setMeta(attrName, attrValue, content) {
+  let el = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attrName, attrValue);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function initBlog() {
+  const grid = document.querySelector('#blog-grid');
+  const feed = document.querySelector('#blog-feed');
+  const articleWrapper = document.querySelector('#blog-article');
+  const articleContent = document.querySelector('#blog-article-content');
+  const backBtn = document.querySelector('#blog-back-btn');
+
+  if (!grid || !feed || !articleWrapper || !articleContent || !backBtn) return;
+
+  // Render blog grid cards
+  grid.innerHTML = blogPosts.map(post => `
+    <article class="blog-card glass-card" data-slug="${escapeHtml(post.slug)}">
+      <img class="blog-card-img" src="${post.coverImage}" alt="${escapeHtml(post.title)}" loading="lazy">
+      <div class="blog-card-body">
+        <div class="blog-card-tags">${post.tags.map(t => `<span class="feat-tag">${escapeHtml(t)}</span>`).join('')}</div>
+        <h3 class="blog-card-title">${escapeHtml(post.title)}</h3>
+        <p class="blog-card-excerpt">${escapeHtml(post.excerpt)}</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date"><i class="fas fa-calendar-alt"></i> ${escapeHtml(post.date)}</span>
+          <button class="btn-secondary sm-btn blog-read-btn" data-slug="${escapeHtml(post.slug)}">Read More</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  function openPost(slug) {
+    const post = blogPosts.find(p => p.slug === slug);
+    if (!post) return;
+
+    articleContent.innerHTML = `
+      <img class="blog-article-cover" src="${post.coverImage}" alt="${escapeHtml(post.title)}">
+      <div class="blog-article-meta">
+        <div class="blog-card-tags">${post.tags.map(t => `<span class="feat-tag">${escapeHtml(t)}</span>`).join('')}</div>
+        <span class="blog-card-date"><i class="fas fa-calendar-alt"></i> ${escapeHtml(post.date)}</span>
+      </div>
+      <h1>${escapeHtml(post.title)}</h1>
+      <div class="blog-article-body">${post.content}</div>
+    `;
+
+    feed.hidden = true;
+    articleWrapper.hidden = false;
+
+    // Update URL without page reload
+    const postUrl = `${SITE_URL}/?post=${encodeURIComponent(post.slug)}`;
+    history.pushState({ post: post.slug }, post.title, `?post=${encodeURIComponent(post.slug)}`);
+
+    setPageMeta({
+      title: `${post.title} | ${SITE_NAME}`,
+      description: post.excerpt,
+      url: postUrl,
+      image: post.coverImage
+    });
+
+    articleWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showFeed() {
+    feed.hidden = false;
+    articleWrapper.hidden = true;
+    history.pushState({}, SITE_NAME, window.location.pathname);
+    setPageMeta({
+      title: `Blog | ${SITE_NAME}`,
+      description: DEFAULT_DESC,
+      url: `${SITE_URL}/`
+    });
+  }
+
+  // Click on card or Read More button
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-slug]');
+    if (btn) openPost(btn.dataset.slug);
+  });
+
+  backBtn.addEventListener('click', showFeed);
+
+  // Browser back/forward
+  window.addEventListener('popstate', () => {
+    const slug = new URLSearchParams(window.location.search).get('post');
+    if (slug) {
+      showSection('blog');
+      openPost(slug);
+    } else {
+      showFeed();
+    }
+  });
+
+  // On initial load — open post from URL if present
+  const initialSlug = new URLSearchParams(window.location.search).get('post');
+  if (initialSlug) {
+    showSection('blog');
+    openPost(initialSlug);
+  }
 }

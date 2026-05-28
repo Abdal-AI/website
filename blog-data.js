@@ -1,29 +1,26 @@
 /**
- * ═══════════════════════════════════════════════════════════════
- *  BLOG DATA FILE — CodeWithAbdal
- * ═══════════════════════════════════════════════════════════════
+ * BLOG DATA FILE — CodeWithAbdal
  *
- *  HOW TO ADD A NEW BLOG POST:
- *  1. Copy one of the objects below.
- *  2. Paste it at the TOP of the array (inside the [ ... ]).
- *  3. Fill in your title, date, excerpt, coverImage, tags, and content.
- *  4. Save the file. Done! Your post goes live instantly.
+ * HOW TO ADD A NEW BLOG POST:
+ * 1. Copy one object below and paste it at the TOP of the array.
+ * 2. Fill in: id, slug, title, date, tags, coverImage, excerpt, content.
+ *    - slug must be lowercase-kebab-case (used in the URL: /?post=your-slug)
+ *    - date format: "Month DD, YYYY"
+ * 3. Save and push to GitHub — Vercel deploys automatically.
  *
- *  CONTENT TIP: Use HTML inside the `content` field for formatting.
- *  Examples:  <strong>bold</strong>   <em>italic</em>   <br>
- *             <h3>Subheading</h3>      <ul><li>item</li></ul>
- *             <code>print("hello")</code>
- * ═══════════════════════════════════════════════════════════════
+ * CONTENT: Use HTML inside `content` for formatting.
+ *   <h3>  <p>  <ul><li>  <strong>  <em>  <code>  <a href="">
  */
 
 export const blogPosts = [
   {
     id: 3,
+    slug: 'how-i-built-my-ai-portfolio-website',
     title: 'How I Built My AI Portfolio Website From Scratch',
     date: 'April 15, 2026',
     tags: ['Web Dev', 'Vite', 'Design'],
     coverImage: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800',
-    excerpt: 'A deep dive into how I designed and developed this portfolio site — from the 3D canvas background to the glassmorphism UI, EmailJS integration, and Supabase reviews.',
+    excerpt: 'A deep dive into how I designed and developed this portfolio site — from the 3D canvas background to the glassmorphism UI and contact form integration.',
     content: `
       <p>Building a portfolio from scratch is one of the best ways to showcase your skills. In this post, I walk you through the full process of creating <strong>CodeWithAbdal</strong> — my personal AI-specialist portfolio.</p>
 
@@ -32,13 +29,12 @@ export const blogPosts = [
       <ul>
         <li><strong>Three.js</strong> for the 3D neural-gravity background</li>
         <li><strong>GSAP</strong> for smooth entrance animations</li>
-        <li><strong>Supabase</strong> for the live reviews database</li>
-        <li><strong>EmailJS</strong> for the contact form email delivery</li>
+        <li><strong>FormSubmit.co</strong> for the contact form email delivery</li>
         <li>Pure <strong>Vanilla CSS</strong> with glassmorphism effects</li>
       </ul>
 
       <h3>Design Philosophy</h3>
-      <p>The goal was a dark, obsidian aesthetic with neon-lime accents — inspired by sites like kaitlynson.com. Every element needed to feel premium and intentional.</p>
+      <p>The goal was a dark, obsidian aesthetic with neon-lime accents. Every element needed to feel premium and intentional.</p>
 
       <h3>Key Challenges</h3>
       <p>The biggest challenge was wiring up the SPA navigation without a framework. I ended up using a simple <code>showSection()</code> pattern combined with GSAP animation transitions, which works beautifully.</p>
@@ -48,6 +44,7 @@ export const blogPosts = [
   },
   {
     id: 2,
+    slug: 'getting-started-with-machine-learning',
     title: 'Getting Started with Machine Learning — A Practical Guide',
     date: 'April 12, 2026',
     tags: ['Machine Learning', 'Python', 'Beginner'],
@@ -86,6 +83,7 @@ predictions = model.predict(X_test)</code>
   },
   {
     id: 1,
+    slug: 'data-visualization-most-underrated-skill',
     title: 'Why Data Visualization is the Most Underrated Skill in Data Science',
     date: 'April 8, 2026',
     tags: ['Data Science', 'Visualization', 'Seaborn'],
