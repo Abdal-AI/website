@@ -1,12 +1,5 @@
 import { initThreeScene } from './three-scene.js';
-import {
-  fetchRemoteReviews,
-  hasSupabaseConfig,
-  insertRemoteReview,
-  subscribeToRemoteReviews
-} from './supabase.js';
 import gsap from 'gsap';
-import emailjs from '@emailjs/browser';
 
 const defaultReviews = [
   {
@@ -107,26 +100,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.querySelectorAll('.cards-grid, .contact-container').forEach(el => observer.observe(el));
 
-  await initReviews();
+  initReviews();
   initChatbot();
   initContactForm();
   initPaymentProof();
 });
 
-async function initReviews() {
+function initReviews() {
   const reviewForm = document.querySelector('#review-form');
   const reviewsList = document.querySelector('#reviews-list');
   const reviewAverage = document.querySelector('#review-average');
   if (!reviewForm || !reviewsList || !reviewAverage) return;
 
-  const initialReviews = await getReviews();
-  renderReviews(initialReviews, reviewsList, reviewAverage);
+  renderReviews(loadReviews(), reviewsList, reviewAverage);
 
-  subscribeToRemoteReviews((remoteReviews) => {
-    renderReviews(remoteReviews, reviewsList, reviewAverage);
-  });
-
-  reviewForm.addEventListener('submit', async (event) => {
+  reviewForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const name = document.querySelector('#review-name')?.value.trim();
@@ -136,44 +124,17 @@ async function initReviews() {
 
     if (!name || !message) return;
 
-    const previousButtonText = submitBtn?.textContent || 'Submit Review';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Saving Review...';
-    }
+    const nextReviews = [{ name, rating, message }, ...loadReviews()];
+    localStorage.setItem('codewithabdal-reviews', JSON.stringify(nextReviews));
 
-    const nextReviews = [
-      {
-        name,
-        rating,
-        message
-      },
-      ...(await getReviews())
-    ];
-
-    const savedRemotely = await insertRemoteReview({ name, rating, message });
-    if (!savedRemotely) {
-      localStorage.setItem('codewithabdal-reviews', JSON.stringify(nextReviews));
-    }
-
-    const refreshedReviews = savedRemotely ? await getReviews() : nextReviews;
-    renderReviews(refreshedReviews, reviewsList, reviewAverage);
+    renderReviews(nextReviews, reviewsList, reviewAverage);
     reviewForm.reset();
 
     if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = previousButtonText;
+      submitBtn.textContent = 'Review Saved!';
+      setTimeout(() => { submitBtn.textContent = 'Submit Review'; }, 2000);
     }
   });
-}
-
-async function getReviews() {
-  if (hasSupabaseConfig) {
-    const remoteReviews = await fetchRemoteReviews();
-    if (remoteReviews && remoteReviews.length) return remoteReviews;
-  }
-
-  return loadReviews();
 }
 
 function loadReviews() {
@@ -284,89 +245,47 @@ function initContactForm() {
       return;
     }
 
-    const prevBtnText = submitBtn ? submitBtn.textContent : 'Send Fast';
-    if (submitBtn) submitBtn.textContent = 'Sending Engine...';
-
-    // Send real email via EmailJS. Configure these in .env before deploying.
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-    const recipientEmail = import.meta.env.VITE_CONTACT_TO_EMAIL || 'muhammadabdal15140@gmail.com';
-
-    const emailSentSuccessfully = await sendContactEmail({
-      name,
-      email,
-      projectType,
-      message,
-      recipientEmail,
-      serviceId,
-      templateId,
-      publicKey
-    });
-
-    if (submitBtn) submitBtn.textContent = prevBtnText;
-
-    if (!emailSentSuccessfully) {
-      status.textContent = 'Email could not be sent. Please email me directly at muhammadabdal15140@gmail.com.';
-      status.classList.add('is-visible');
-      return;
+    const prevBtnText = submitBtn ? submitBtn.textContent : 'Send Transmission';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
     }
 
-    status.textContent = 'Message sent successfully to my email.';
-    status.classList.add('is-visible');
-    form.reset();
-  });
-}
+    status.textContent = '';
+    status.classList.remove('is-visible');
 
-function hasEmailJsConfig(serviceId, templateId, publicKey) {
-  return [serviceId, templateId, publicKey].every(
-    (value) => value && !String(value).startsWith('your-')
-  );
-}
-
-async function sendContactEmail({ name, email, projectType, message, recipientEmail, serviceId, templateId, publicKey }) {
-  if (hasEmailJsConfig(serviceId, templateId, publicKey)) {
     try {
-      emailjs.init({ publicKey });
-      await emailjs.send(serviceId, templateId, {
-        to_email: recipientEmail,
-        from_name: name,
-        from_email: email,
-        user_name: name,
-        user_email: email,
-        project_type: projectType,
-        message,
-        reply_to: email
+      const response = await fetch('https://formsubmit.co/ajax/muhammadabdal15140@gmail.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          project_type: projectType,
+          message,
+          _subject: `New ${projectType} inquiry from ${name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
       });
-      return true;
-    } catch (error) {
-      console.error('EmailJS failed:', error);
+
+      if (response.ok) {
+        status.textContent = 'Message sent! I will get back to you soon.';
+        status.classList.add('is-visible');
+        form.reset();
+      } else {
+        throw new Error('FormSubmit responded with an error');
+      }
+    } catch {
+      status.textContent = 'Could not send the message. Please email me directly at muhammadabdal15140@gmail.com.';
+      status.classList.add('is-visible');
     }
-  }
 
-  try {
-    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        project_type: projectType,
-        message,
-        _subject: `New ${projectType} inquiry from ${name}`,
-        _template: 'table',
-        _captcha: 'false'
-      })
-    });
-
-    return response.ok;
-  } catch (error) {
-    console.error('FormSubmit failed:', error);
-    return false;
-  }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = prevBtnText;
+    }
+  });
 }
 
 function appendChatMessage(container, role, text) {
