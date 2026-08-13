@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://website-main-zeta-six.vercel.app/sitemap.xml
+Sitemap: https://codewithabdal.com/sitemap.xml
+

@@ -439,7 +439,7 @@ I am sending my payment proof. Please confirm receipt.`;
 
 // ── Blog ─────────────────────────────────────────────────────────────────────
 
-const SITE_URL = 'https://website-main-zeta-six.vercel.app';
+const SITE_URL = 'https://codewithabdal.com';
 const SITE_NAME = 'CodeWithAbdal';
 const DEFAULT_DESC = 'AI, Machine Learning, and Data Science by Muhammad Abdal — practical guides, projects, and freelance services.';
 
